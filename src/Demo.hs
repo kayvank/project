@@ -6,11 +6,11 @@ module Demo where
 import           Project
 import           Reporting
 
-someProject :: Project
+someProject :: Project ProjectId
 someProject = ProjectGroup "Sweden" [stockholm, gothenburg, malmo]
   where
-    stockholm = Project 1 "Stockholm"
-    gothenburg = Project 2 "Gothenburg"
+    stockholm = Project  "Stockholm" 1
+    gothenburg = Project  "Gothenburg" 2
     malmo = ProjectGroup "Malmo" [city, limhamn]
-    city = Project 3 "Malmo City"
-    limhamn = Project 4 "Limhamn"
+    city = Project  "Malmo City" 3
+    limhamn = Project  "Limhamn"4

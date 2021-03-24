@@ -6,7 +6,7 @@ let
 
   f = { mkDerivation, base, bytestring, checkers, containers, hspec
       , lib, mtl, QuickCheck, random, shell-conduit, stm, text
-      , transformers, zlib, hpack
+      , transformers, zlib, hpack, hlint
       }:
       mkDerivation {
         pname = "project";

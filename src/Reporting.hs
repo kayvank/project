@@ -2,6 +2,7 @@
 
 module Reporting where
 
+import Data.Foldable (fold)
 import           Data.Monoid (getSum)
 import qualified Database    as DB
 import           Project
@@ -33,8 +34,8 @@ calculateReport  budget transactions =
           asProfit (Sale m)     =  pure m
           asProfit (Purchase m) = pure (negate m)
 
-calculateProjectReport :: Project -> IO Report
-calculateProjectReport  = calc
-  where
-    calc (Project p _) = calculateReport <$> DB.getBudget p <*> DB.getTransactions p
-    calc (ProjectGroup _ projects) = foldMap calc projects
+calculateProjectReport :: Project ProjectId -> IO (Project Report)
+calculateProjectReport  =
+  traverse (\p -> calculateReport <$> DB.getBudget p <*> DB.getTransactions p)
+accumulateProjectReport :: Project Report -> Report
+accumulateProjectReport =  fold

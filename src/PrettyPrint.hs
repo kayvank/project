@@ -10,15 +10,14 @@ import           Text.Printf
 import           Project
 import           Reporting
 
-asTree, asTree' :: Project -> Tree String
-asTree' (Project (ProjectId pid) name) =  Node (printf "%s (%d)" name pid) []
-asTree' (ProjectGroup name projects) = Node (Text.unpack name) ( map asTree projects )
-asTree project = case project of
- Project ( ProjectId pid ) name ->   Node (printf "%s (%d)" name pid) []
- ProjectGroup name projects     ->  Node (Text.unpack name) (asTree <$> projects)
+asTree :: (a -> String) -> Project a  -> Tree String
+asTree prettyValue project = case project of
+ Project  name x ->   Node (printf "%s: %s" name (prettyValue x) ) []
+ ProjectGroup name projects     ->
+   Node (Text.unpack name) (map (asTree prettyValue) projects)
 
-prettyProject :: Project -> String
-prettyProject  =  drawTree . asTree
+prettyProject :: (a -> String) -> Project a -> String
+prettyProject  prettyValue =  drawTree . asTree prettyValue
 
 prettyReport :: Report -> String
 prettyReport  report = printf
