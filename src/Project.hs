@@ -6,9 +6,10 @@
 
 module Project where
 import           Data.Text
+import Data.Decimal (Decimal)
 
 newtype Money = Money {
-  unMoney :: Double
+  unMoney :: Decimal
   } deriving (Show, Eq, Num)
 
 newtype ProjectId = ProjectId {

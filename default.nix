@@ -1,5 +1,5 @@
 { mkDerivation, base, bytestring, checkers, containers, hspec, lib
-, mtl, QuickCheck, random, shell-conduit, stm, text, transformers, zlib
+, mtl, QuickCheck, random, shell-conduit, stm, text, transformers, Decimal, zlib
 }:
 mkDerivation {
   pname = "project";

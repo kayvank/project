@@ -28,6 +28,7 @@ library
     -- other-extensions:
     build-depends:
         base ^>=4.14.1.0
+      , Decimal
       , containers
       , mtl
       , text

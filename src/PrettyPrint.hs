@@ -6,6 +6,7 @@ module PrettyPrint where
 import qualified Data.Text   as Text
 import           Data.Tree
 import           Text.Printf
+import Data.Decimal (roundTo)
 
 import           Project
 import           Reporting
@@ -21,7 +22,14 @@ prettyProject  prettyValue =  drawTree . asTree prettyValue
 
 prettyReport :: Report -> String
 prettyReport  report = printf
-  "budgetProfit: %.2f, netProfit: %.2f, difference: %.2f"
-    ( (unMoney . budgetProfit) report)
-    (unMoney ( netProfit report))
-    (unMoney ( difference report))
+  "Budget: %s, Net: %s, difference: %s"
+    ( (prettyMoney . budgetProfit) report)
+    (prettyMoney ( netProfit report))
+    (prettyMoney ( difference report))
+
+prettyMoney :: Money -> String
+prettyMoney (Money d) = sign ++ show (roundTo 2 d)
+  where
+    sign =
+      if d > 0 then "+"
+      else ""
